@@ -1,6 +1,7 @@
 ﻿using EntityFrameworkNet6Tre.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 
 namespace EntityFrameworkNet6Tre.Data
 {
