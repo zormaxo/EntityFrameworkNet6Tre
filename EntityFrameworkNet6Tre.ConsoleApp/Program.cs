@@ -1,12 +1,76 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using EntityFrameworkNet6Tre.Data;
 using EntityFrameworkNet6Tre.Domain;
+using Microsoft.EntityFrameworkCore;
 
 FootballLeageDbContext context = new FootballLeageDbContext();
 
 /* Simple Insert Operation Methods */
-await AddNewLeague();
-//await AddNewTeamsWithLeague();
+////await AddNewLeague();
+////await AddNewTeamsWithLeague();
+
+/* Simple Select Queries */
+////await SimpleSelectQuery();
+
+/* Queries With Filters */
+////await QueryFilters();
+
+/* Aggregate Functions */
+////await AdditionalExecutionMethods();
+
+async Task AdditionalExecutionMethods()
+{
+    //// These methods also have non-async
+    var leagues = context.Leagues;
+    var list = await leagues.ToListAsync();
+    var first = await leagues.FirstAsync();
+    var firstOrDefault = await leagues.FirstOrDefaultAsync();
+    var single = await leagues.SingleAsync();
+    var singleOrDefault = await leagues.SingleOrDefaultAsync();
+
+    var count = await leagues.CountAsync();
+    var longCount = await leagues.LongCountAsync();
+    var min = await leagues.MinAsync();
+    var max = await leagues.MaxAsync();
+
+    //// DbSet Method that will execute
+    var league = await leagues.FindAsync(1);
+}
+
+async Task QueryFilters()
+{
+    Console.Write($"Enter League Name (Or Part Of): ");
+    var leagueName = Console.ReadLine();
+    var exactMatches = await context.Leagues.Where(q => q.Name.Equals(leagueName)).ToListAsync();
+    foreach (var league in exactMatches)
+    {
+        Console.WriteLine($"{league.Id} - {league.Name}");
+    }
+
+    //var partialMatches = await context.Leagues.Where(q => q.Name.Contains(leagueName)).ToListAsync();
+    var partialMatches = await context.Leagues.Where(q => EF.Functions.Like(q.Name, $"%{leagueName}%")).ToListAsync();
+    foreach (var league in partialMatches)
+    {
+        Console.WriteLine($"{league.Id} - {league.Name}");
+    }
+}
+
+async Task SimpleSelectQuery()
+{
+    //// Smartest most efficient way to get results
+    var leagues = await context.Leagues.ToListAsync();
+    foreach (var league in leagues)
+    {
+        Console.WriteLine($"{league.Id} - {league.Name}");
+    }
+
+    //// Inefficient way to get results. Keeps connection open until completed and might create lock on table
+    ////foreach (var league in context.Leagues)
+    ////{
+    ////    Console.WriteLine($"{league.Id} - {league.Name}");
+    ////}
+
+}
 
 async Task AddNewLeague()
 {
