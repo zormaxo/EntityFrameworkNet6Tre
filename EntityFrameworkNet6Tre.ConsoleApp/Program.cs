@@ -18,6 +18,58 @@ FootballLeageDbContext context = new FootballLeageDbContext();
 /* Aggregate Functions */
 ////await AdditionalExecutionMethods();
 
+/*Alternative LINQ Syntax*/
+////await AlternativeLinqSyntax();
+
+/* Perform Update */
+await SimpleUpdateLeagueRecord();
+////await SimpleUpdateTeamRecord();
+
+async Task SimpleUpdateTeamRecord()
+{
+    var team = new Team
+    {
+        Id = 7,
+        Name = "Seba United FC",
+        LeagueId = 2
+    };
+    context.Teams.Update(team);
+    await context.SaveChangesAsync();
+}
+
+async Task GetRecord()
+{
+    ////Retrieve Record
+    var league = await context.Leagues.FindAsync(2);
+    Console.WriteLine($"{league.Id} - {league.Name}");
+}
+
+async Task SimpleUpdateLeagueRecord()
+{
+    ////Retrieve Record
+    var league = await context.Leagues.FindAsync(2);
+    ///Make Record Changes
+    league.Name = "Scottish Premiership";
+    ///Save Changes
+    await context.SaveChangesAsync();
+
+    await GetRecord();
+}
+
+async Task AlternativeLinqSyntax()
+{
+    Console.Write($"Enter Team Name (Or Part Of): ");
+    var teamName = Console.ReadLine();
+    var teams = await (from i in context.Teams
+                       where EF.Functions.Like(i.Name, $"%{teamName}%")
+                       select i).ToListAsync();
+
+    foreach (var team in teams)
+    {
+        Console.WriteLine($"{team.Id} - {team.Name}");
+    }
+}
+
 async Task AdditionalExecutionMethods()
 {
     //// These methods also have non-async
@@ -47,25 +99,26 @@ async Task QueryFilters()
         Console.WriteLine($"{league.Id} - {league.Name}");
     }
 
-    //var partialMatches = await context.Leagues.Where(q => q.Name.Contains(leagueName)).ToListAsync();
-    var partialMatches = await context.Leagues.Where(q => EF.Functions.Like(q.Name, $"%{leagueName}%")).ToListAsync();
-    foreach (var league in partialMatches)
-    {
-        Console.WriteLine($"{league.Id} - {league.Name}");
-    }
+    ////var partialMatches = await context.Leagues.Where(q => q.Name.Contains(leagueName)).ToListAsync();
+    ////var partialMatches = await context.Leagues.Where(q => EF.Functions.Like(q.Name, $"%{leagueName}%")).ToListAsync();
+    ////foreach (var league in partialMatches)
+    ////{
+    ////    Console.WriteLine($"{league.Id} - {league.Name}");
+    ////}
 }
 
 async Task SimpleSelectQuery()
 {
     //// Smartest most efficient way to get results
-    var leagues = await context.Leagues.ToListAsync();
-    foreach (var league in leagues)
-    {
-        Console.WriteLine($"{league.Id} - {league.Name}");
-    }
+    //var leagues = await context.Leagues.ToListAsync();
+    //foreach (var league in leagues)
+    //{
+    //    Console.WriteLine($"{league.Id} - {league.Name}");
+    //}
 
     //// Inefficient way to get results. Keeps connection open until completed and might create lock on table
-    ////foreach (var league in context.Leagues)
+    ////var s = await context.Leagues.ToListAsync();
+    ////foreach (var league in context.Leagues.ToList())
     ////{
     ////    Console.WriteLine($"{league.Id} - {league.Name}");
     ////}
