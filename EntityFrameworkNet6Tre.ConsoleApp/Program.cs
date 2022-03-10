@@ -22,8 +22,48 @@ FootballLeageDbContext context = new FootballLeageDbContext();
 ////await AlternativeLinqSyntax();
 
 /* Perform Update */
-await SimpleUpdateLeagueRecord();
+////await SimpleUpdateLeagueRecord();
 ////await SimpleUpdateTeamRecord();
+
+/* Perform Delete */
+////await SimpleDelete();
+////await DeleteWithRelationship();
+
+/*Tracking vs No-Tracking*/
+await TrackingVsNoTracking();
+
+Console.WriteLine("Press Any Key To End....");
+Console.ReadKey();
+
+  async Task TrackingVsNoTracking()
+{
+    var withTracking = await context.Teams.FirstOrDefaultAsync(q => q.Id == 2);
+    var withNoTracking = await context.Teams.AsNoTracking().FirstOrDefaultAsync(q => q.Id == 8);
+
+    withTracking.Name = "Inter Milan";
+    withNoTracking.Name = "Rivoli United";
+
+    var entriesBeforeSave = context.ChangeTracker.Entries();
+
+    await context.SaveChangesAsync();
+
+    var entriesAfterSave = context.ChangeTracker.Entries();
+}
+
+async Task SimpleDelete()
+{
+    var league = await context.Leagues.FindAsync(4);
+    context.Leagues.Remove(league);
+    await context.SaveChangesAsync();
+}
+
+  async Task DeleteWithRelationship()
+{
+    var league = await context.Leagues.FindAsync(2);
+    context.Leagues.Remove(league);
+    await context.SaveChangesAsync();
+}
+
 
 async Task SimpleUpdateTeamRecord()
 {
