@@ -1,8 +1,7 @@
-﻿
-namespace EntityFrameworkNet6Tre.Domain.Common
+﻿namespace EntityFrameworkNet6Tre.Domain.Common
 {
     public abstract class BaseDomainObject
     {
-        public int Id { get; set; }
+        public int Id { get; init; }
     }
 }

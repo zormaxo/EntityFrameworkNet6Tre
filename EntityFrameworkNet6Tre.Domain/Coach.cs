@@ -2,10 +2,10 @@
 
 namespace EntityFrameworkNet6Tre.Domain
 {
-    public class League : BaseDomainObject
+    public class Coach : BaseDomainObject
     {
         public string Name { get; set; }
-
-        public List<Team> Teams { get; set; }
+        public int? TeamId { get; set; }
+        public virtual Team Team { get; set; }
     }
 }

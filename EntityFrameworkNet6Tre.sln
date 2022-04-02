@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFrameworkNet6Tre.Cons
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFrameworkNet6Tre.Data", "EntityFrameworkNet6Tre.Data\EntityFrameworkNet6Tre.Data.csproj", "{698D3DE9-F8F7-4D79-92A1-4F900C73D631}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkNet6Tre.Domain", "EntityFrameworkNet6Tre.Domain\EntityFrameworkNet6Tre.Domain.csproj", "{02AEDB3C-0D27-4383-84C1-738AB2650E90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFrameworkNet6Tre.Domain", "EntityFrameworkNet6Tre.Domain\EntityFrameworkNet6Tre.Domain.csproj", "{02AEDB3C-0D27-4383-84C1-738AB2650E90}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5B74DCB9-095C-4B9C-8CB6-A1F0A26F453B}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
