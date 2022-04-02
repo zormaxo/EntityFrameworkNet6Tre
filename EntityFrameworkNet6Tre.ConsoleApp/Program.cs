@@ -53,7 +53,7 @@ FootballLeageDbContext context = new();
 //await StronglyTypedProjection();
 
 /* Filter Based on Related Data */
-//await FilteringWithRelatedData();
+await FilteringWithRelatedData();
 
 Console.WriteLine("Press Any Key To End....");
 Console.ReadKey();
